@@ -15,7 +15,7 @@ require("dotenv").config()
 const app = express()
 const port = process.env.PORT || 8080
 const corsOptions = {
-    origin: "http://localhost:5173",
+    origin: "https://dapp-client-green.vercel.app",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
