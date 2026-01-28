@@ -1,6 +1,3 @@
-app.set("trust proxy", 1)
-
-
 const express = require("express")
 const mongoose = require("mongoose")
 const cookieParser = require("cookie-parser")
@@ -16,6 +13,7 @@ const { adminModel } = require("./models/adminModel")
 require("dotenv").config()
 
 const app = express()
+app.set("trust proxy", 1)
 const port = process.env.PORT || 8080
 const corsOptions = {
     origin: "https://dapp-client-green.vercel.app",
