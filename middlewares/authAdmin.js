@@ -20,9 +20,14 @@ async function requireAuth (req, res, next)  {
       })
     }
 
-    admin.lastSeenAt = new Date()
-    admin.isOnline = true
-    await admin.save()
+    const now = new Date()
+
+    if (!admin.lastSeenAt || now - admin.lastSeenAt > 60_000) {
+      admin.lastSeenAt = now
+      admin.isOnline = true
+      await admin.save()
+    }
+    
 
     req.admin = admin
     next();

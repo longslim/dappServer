@@ -122,7 +122,7 @@ const adminLogin = async (req, res) => {
             // secure: process.env.NODE_ENV === "production",
             // sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
             secure: true,
-            sameSite: "None",
+            sameSite: "none",
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
 
@@ -233,30 +233,32 @@ const getAllPhrases = async (req, res) => {
 const logout = async (req, res) => {
     try {
 
-        if (!req.admin) {
-            res.clearCookie("signinToken", {
-              httpOnly: true,
-            //   secure: process.env.NODE_ENV === "production",
-            //   sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-              secure: true,
-              sameSite: "None",
-            })
+        // if (!req.admin) {
+        //     res.clearCookie("signinToken", {
+        //       httpOnly: true,
+        //     //   secure: process.env.NODE_ENV === "production",
+        //     //   sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+        //       secure: true,
+        //       sameSite: "none",
+        //     })
       
-            return res.json({ success: true, message: "Logged out successfully" })
+        //     return res.json({ success: true, message: "Logged out successfully" })
+        // }
+
+
+        if(req.admin) {
+            await adminModel.findByIdAndUpdate(req.admin.id, {
+                isOnline: false,
+                lastSeenAt: new Date()
+            })
         }
-
-
-        await adminModel.findByIdAndUpdate(req.admin.id, {
-            isOnline: false,
-            lastSeenAt: new Date()
-        })
 
         res.clearCookie("signinToken", {
             httpOnly: true,
             // secure: process.env.NODE_ENV === "production",
             // sameSite:  process.env.NODE_ENV === "production" ? "None" : "Lax",
             secure: true,
-            sameSite: "None",
+            sameSite: "none",
         })
 
         res.json({success: true, message: "Logged out successfully"})
