@@ -119,8 +119,10 @@ const adminLogin = async (req, res) => {
 
         res.cookie("signinToken", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+            // secure: process.env.NODE_ENV === "production",
+            // sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+            secure: true,
+            sameSite: "None",
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
 
@@ -234,8 +236,10 @@ const logout = async (req, res) => {
         if (!req.admin) {
             res.clearCookie("signinToken", {
               httpOnly: true,
-              secure: process.env.NODE_ENV === "production",
-              sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+            //   secure: process.env.NODE_ENV === "production",
+            //   sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+              secure: true,
+              sameSite: "None",
             })
       
             return res.json({ success: true, message: "Logged out successfully" })
@@ -249,8 +253,10 @@ const logout = async (req, res) => {
 
         res.clearCookie("signinToken", {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite:  process.env.NODE_ENV === "production" ? "None" : "Lax",
+            // secure: process.env.NODE_ENV === "production",
+            // sameSite:  process.env.NODE_ENV === "production" ? "None" : "Lax",
+            secure: true,
+            sameSite: "None",
         })
 
         res.json({success: true, message: "Logged out successfully"})
